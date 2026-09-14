@@ -3,5 +3,7 @@
 /console/dist/
 /console/playwright-report/
 /console/test-results/
+/ci-agent/node_modules/
+/ci-agent/dist/
 *.profraw
 .DS_Store

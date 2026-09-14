@@ -1,0 +1,45 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+
+import {
+  AgentRuntimeRestoreHostEnvironment,
+  AgentRuntimeSanitizeAgentEnvironment,
+} from "../main/run-agent.js";
+
+void test("agent subprocess environment retains only non-credential execution settings", () => {
+  const environment = {
+    ACTIONS_ID_TOKEN_REQUEST_TOKEN: "oidc-secret",
+    ACTIONS_RUNTIME_TOKEN: "runtime-secret",
+    CURSOR_API_KEY: "cursor-secret",
+    HOME: "/tmp/home",
+    HIVE_GITHUB_PAT: "github-secret",
+    PATH: "/usr/bin",
+  };
+
+  new AgentRuntimeSanitizeAgentEnvironment(environment).execute();
+
+  assert.deepEqual(environment, {
+    HOME: "/tmp/home",
+    PATH: "/usr/bin",
+  });
+});
+
+void test("host environment is restored exactly after sandboxed execution", () => {
+  const original = {
+    AGENT_BRANCH: "codex/successor",
+    HOME: "/trusted/home",
+    HIVE_GITHUB_PAT: "github-secret",
+  };
+  const environment = {
+    HOME: "/tmp/hive-agent-home",
+    INTRODUCED_DURING_AGENT: "remove-me",
+    PATH: "/usr/bin",
+  };
+
+  new AgentRuntimeRestoreHostEnvironment({
+    snapshot: original,
+    environment: environment,
+  }).execute();
+
+  assert.deepEqual(environment, original);
+});

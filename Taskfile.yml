@@ -17,5 +17,16 @@ tasks:
     dir: console
     deps: [console:install]
     cmds: [bun run build]
+  ci-agent:install:
+    dir: ci-agent
+    cmds: [npm ci]
+  ci-agent:check:
+    dir: ci-agent
+    deps: [ci-agent:install]
+    cmds: [npm run lint, npm run check, npm run build]
+  ci-agent:test:
+    dir: ci-agent
+    deps: [ci-agent:install]
+    cmds: [npm test]
   verify:
-    deps: [check, test, console:check, console:build]
+    deps: [check, test, console:check, console:build, ci-agent:check, ci-agent:test]

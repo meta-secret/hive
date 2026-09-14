@@ -12,5 +12,10 @@ delivery, or deployment behavior.
 - Add behavior-focused Rust tests for domain changes and focused web tests for
   operator-flow changes.
 - Keep user-visible console text in the shared locale catalogs.
+- Keep repository automation in `ci-agent/` standalone: use Hive root paths,
+  `HIVE_*` environment names, and behavior-focused Node tests for changed
+  automation.
+- Preserve CI-agent credential isolation, authenticated publication, exact-head
+  review, and change-budget boundaries.
 - Document schema, storage, deployment, and credential migrations.
 - CI and manifests must retain least privilege.

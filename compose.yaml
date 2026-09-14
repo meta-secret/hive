@@ -1,0 +1,13 @@
+services:
+  neo4j:
+    image: neo4j:2026.06.0-community
+    environment:
+      NEO4J_AUTH: neo4j/hive-development-password
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - hive-neo4j:/data
+
+volumes:
+  hive-neo4j:

@@ -1,0 +1,21 @@
+version: "3"
+tasks:
+  check:
+    cmds:
+      - cargo fmt --all --check
+      - cargo clippy --locked --workspace --all-targets -- -D warnings
+  test:
+    cmds: [cargo test --locked --workspace]
+  console:install:
+    dir: console
+    cmds: [bun install --frozen-lockfile]
+  console:check:
+    dir: console
+    deps: [console:install]
+    cmds: [bun run format:check, bun run check]
+  console:build:
+    dir: console
+    deps: [console:install]
+    cmds: [bun run build]
+  verify:
+    deps: [check, test, console:check, console:build]

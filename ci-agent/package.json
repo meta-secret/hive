@@ -20,7 +20,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@cursor/sdk": "^1.0.28",
+    "@cursor/sdk": "^1.0.35",
     "@octokit/rest": "^22.0.1",
     "neverthrow": "8.2.0"
   },
